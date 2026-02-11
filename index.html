@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Generador de Firma Institucional</title>
+
+    <!-- Poppins SOLO para el generador web (Outlook no soporta Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", Arial, sans-serif;
+        background: #f4f6f9;
+        padding: 30px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: auto;
+        background: #fff;
+        padding: 24px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        color: #00457f;
+      }
+
+      label {
+        display: block;
+        margin-top: 12px;
+        font-weight: 600;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+
+      button {
+        margin-top: 16px;
+        padding: 12px 20px;
+        background: #00457f;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 8px;
+        font-family: "Poppins", Arial, sans-serif;
+        font-weight: 600;
+      }
+
+      button:hover {
+        background: #00345f;
+      }
+
+      .preview {
+        margin-top: 30px;
+        padding: 20px;
+        border: 1px dashed #ccc;
+        background: #fafafa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Firma institucional CIMA - 2026</h1>
+
+      <label>Apellido y Nombre</label>
+      <input id="nombre" placeholder="..." />
+
+      <label>Cargo / Rol o función</label>
+      <input id="cargo" placeholder="..." />
+
+      <label>Área / Dirección / Secretaría</label>
+      <input id="area" placeholder="..." />
+
+      <button onclick="generarFirma()">Generar firma</button>
+      <button onclick="copiarFirma()">Copiar firma</button>
+
+      <div class="preview" id="preview"></div>
+    </div>
+
+    <script>
+      function generarFirma() {
+        const nombre =
+          document.getElementById("nombre").value || "APELLIDO NOMBRE";
+        const cargo = document.getElementById("cargo").value || "Cargo";
+        const area = document.getElementById("area").value || "Área";
+
+        const firmaHTML = `
+<table cellpadding="0" cellspacing="0" style="width:100%; max-width:800px; background:#eef6fb; border-radius:16px;">
+  <tr>
+    <!-- Logo SIAF -->
+    <td style="padding:20px; width:120px; vertical-align:middle; text-align:center;">
+      <img src="logo_siaf.png" width="90" />
+    </td>
+
+    <!-- Texto con separador/sombra -->
+    <td style="
+      padding:20px;
+      font-family: Segoe UI, Arial, sans-serif;
+      font-size:13px;
+      border-left: 2px solid #dbe7f3;
+      padding-left: 24px;
+    ">
+
+      <div style="font-weight:bold; color:#00457F; font-size:15px; text-transform:uppercase;">
+        ${nombre}
+      </div>
+
+      <div style="color:#00457F; margin-top:4px;">
+        ${cargo}
+      </div>
+
+      <br/>
+
+      <div style="color:#6b7280;">
+        ${area}
+      </div>
+
+      <div style="margin-top:4px; font-weight:bold; color:#00457F;">
+        Ministerio de Economía y Gestión Pública
+      </div>
+    </td>
+
+    <!-- Logo Provincia -->
+    <td style="padding:20px; width:120px; vertical-align:middle; text-align:center;">
+      <img src="logo_gobierno.png" width="90" />
+    </td>
+  </tr>
+</table>
+        `;
+
+        document.getElementById("preview").innerHTML = firmaHTML;
+      }
+
+      function copiarFirma() {
+        const preview = document.getElementById("preview");
+        const range = document.createRange();
+        range.selectNodeContents(preview);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand("copy");
+        alert("Firma copiada. Pegala directamente en Outlook.");
+      }
+    </script>
+  </body>
+</html>
